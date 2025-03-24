@@ -5,6 +5,7 @@ void setup() {
 	initializeHardware();
 }
 
+
 void loop() {
 
 	if(getFlgDebounceInput()){

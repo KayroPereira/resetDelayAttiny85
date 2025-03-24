@@ -12,7 +12,6 @@ typedef union{
 
 		unsigned flgSinalDisparo				: 1;
 		unsigned flgTurnOnSensorIR				: 1;
-		unsigned flgToggleOutput				: 1;
 	}flgsInterruptionBits;
 
 	unsigned int flgsInterruptionByte;
@@ -21,16 +20,9 @@ typedef union{
 FlgsInterruption flgsInterruption;
 
 
-unsigned long millisDelayPeriod = millis();
-
-//ISR(TIMER1_COMPA_vect) {
-void timerInterrupt() {
+ISR(TIMER1_COMPA_vect) {
 
 	if(--regDelay1s <= 0){
-
-		softwareSerial.printf("\nDelay timer1 1s: %d\n", millis() - millisDelayPeriod);
-
-		millisDelayPeriod = millis();
 
 		regDelay1s = REG_DELAY_1S;
 
@@ -63,25 +55,9 @@ void timer1Configuration(){
 
 	turnOffInterrupts();
 
-	callBackTimer1(timerInterrupt);
-	configTimer1(TIM_DIV256, TIM_EDGE, TIM_LOOP);
-//	configTimer1(TIM_DIV16, TIM_EDGE, TIM_LOOP);
-	setSpeedTimer();
-//	setSpeedTimerBase_uS(BASE_TIME);
+	configTimer1();
 
 	turnOnInterrupts();
-}
-
-void setSpeedTimer(){
-	setSpeedTimer1((BASE_TIME * BASE_TIME_CLOCK) / DIVISOR_TIMER); // 1ms (80 MHz / 256)
-//	setSpeedTimer1(66); // 1ms (80 MHz / 256)
-}
-
-void setSpeedTimerBase_uS(unsigned int base){
-
-	double baseClock = (1.0 / (BASE_TIME_CLOCK / DIVISOR_TIMER)) / 0.000001;
-
-	setSpeedTimer1(base / baseClock); // 1ms (80 MHz / 256)
 }
 
 void loadFlgSinalDisparo(){
@@ -116,12 +92,4 @@ bool getFlgTurnOnSensorIR(){
 
 void setFlgTurnOnSensorIR(bool value){
 	flgsInterruption.flgsInterruptionBits.flgTurnOnSensorIR = value;
-}
-
-bool getFlgToggleOutput(){
-	return flgsInterruption.flgsInterruptionBits.flgToggleOutput;
-}
-
-void setFlgToggleOutput(bool value){
-	flgsInterruption.flgsInterruptionBits.flgToggleOutput = value;
 }

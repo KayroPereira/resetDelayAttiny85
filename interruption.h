@@ -16,22 +16,6 @@
 #define REG_DELAY_1MIN							60		// 1 minutos
 
 
-//Declara constantes
-
-const int BASE_TIME = 5;				// Base em ms
-const int BASE_TIME_CLOCK = 80000;		// Não mexer
-const int DIVISOR_TIMER = 256;			// Não mexer
-
-//const int BASE_TIME = 13;				// Base em us
-//const int BASE_TIME_CLOCK = 80000000;		// Não mexer
-//const int DIVISOR_TIMER = 16;			// Não mexer
-
-#define TIM_DIV256 3
-#define TIM_DIV16 1
-#define TIM_EDGE 0
-#define TIM_LOOP 1
-
-
 //interruption
 
 bool getFlgToggleOutput();

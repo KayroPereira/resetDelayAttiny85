@@ -43,9 +43,6 @@ void clearOutputIR(){
 
 void definesInitialConditions(){
 
-	setFlgToggleOutput(false);
-
-//	clearOutputIR();
 	setOutputIR();
 }
 
@@ -55,8 +52,11 @@ void verificaTriggerIR(){
 
 		if(!getTriggerSensorIR()){
 
+			delay(1);
+
 			loadFlgSinalDisparo();
 		}else{
+
 			setFlgSinalDisparo(false);
 		}
 
@@ -67,8 +67,6 @@ void verificaTriggerIR(){
 void defineStatusInput(){
 
 	setFlgDebounceInput(false);
-
-	bool readInputs[NUMERO_INPUTS];
 
 	for(char i = 0; i < NUMERO_INPUTS; i++){
 
